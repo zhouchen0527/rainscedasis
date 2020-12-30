@@ -37,7 +37,7 @@ EVIresult= !TRUE
 PValues= TRUE # FALSE returns observed values of test statistic
 Maps= !TRUE
 CIPlot= !TRUE
-TestExtremal= TRUE
+TestExtremal= !TRUE
 TEstConstEVIinStation= !TRUE
 TEstConstEVIBetweenStation = !TRUE
 #========== Initialise =====================
@@ -229,9 +229,9 @@ if(TestExtremal){
   thetaest<-numeric(lb)
   thetasd<-thetaest
   for (i in 1:lb){
-    k<-n/seqb[i]
+    k0<-n/seqb[i]
     thetaest[i]<-slidingEstimator(seqb[i],n,maxdata)
-    thetasd[i]<-sqrt(0.2726)/sqrt(k)
+    thetasd[i]<-sqrt(0.2726)/sqrt(k0)
   }
   
   if (timefile == 'timeIS'){
@@ -244,7 +244,7 @@ if(TestExtremal){
   
   matplot(seqb, cbind(thetaest, thetaest-1.96*thetasd, thetaest+1.96*thetasd), type="l", lty=c(1,2,2), col=c(1,2,2), xlab="block size", ylab=expression(theta))
   abline(h=1,lty=2)
-  
+  rm(k0)
   dev.off()
 }
 
